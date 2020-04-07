@@ -27,9 +27,28 @@ class Nachricht(models.Model):
     anschrift = models.CharField(max_length=200)
     inhalt = models.TextField()
 
-    aufnahmesignatur = models.ForeignKey(Signatur, blank=True, null=True, on_delete=models.CASCADE,related_name="aufnahmesignaturen",related_query_name="aufnahmesignatur")
-    annahmesignatur = models.ForeignKey(Signatur, blank=True, null=True, on_delete=models.CASCADE,related_name="annahmesignaturen",related_query_name="annahmesignatur")
-    #sichtung = models.ForeignKey(Signatur, null=True, on_delete=models.CASCADE)
+    VORRANGSTUFEN = (
+            (0, 'eee'),
+            (1, 'sss'),
+            (2, 'bbb'),
+            (3, 'aaa'),
+        )
+    vorrangstufe = models.IntegerField(default=0, choices=VORRANGSTUFEN)
+
+    MELDEWEGE = (
+            (0, 'Fe'),
+            (1, 'Fu'),
+            (2, 'Me'),
+            (3, 'Mail'),
+            (4, 'SMS'),
+            (5, 'Fax'),
+            (6, 'MIS'),
+        )
+    aufnahmeweg = models.IntegerField(default=0, choices=MELDEWEGE)
+    aufnahmevermerk = models.ForeignKey(Signatur, blank=True, null=True, on_delete=models.CASCADE,related_name="aufnahmevermerke",related_query_name="aufnahmevermerk")
+    annahmevermerk = models.ForeignKey(Signatur, blank=True, null=True, on_delete=models.CASCADE,related_name="annahmevermerke",related_query_name="annahmevermerk")
+    befoerderungsweg = models.IntegerField(default=0, choices=MELDEWEGE)
+    befoerderungsvermerk = models.ForeignKey(Signatur, verbose_name="Beförderungsvermerk", blank=True, null=True, on_delete=models.CASCADE,related_name="befoerderungsvermerke",related_query_name="befoerderungsvermerk")
 
     def __str__(self):
         return self.inhalt
