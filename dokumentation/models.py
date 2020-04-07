@@ -1,4 +1,5 @@
 from django.db import models
+#from django.contrib.auth.models import User
 
 class Meldung(models.Model):
     MELDUNGSRICHTUNG = (
@@ -18,3 +19,14 @@ class Meldung(models.Model):
 
     class Meta:
         verbose_name_plural = "Meldungen"
+
+class Signatur(models.Model):
+
+    zeit = models.DateTimeField(auto_now_add=True, blank=True)
+    #user = models.ForeignKey(User)
+
+    def __str__(self):
+        return self.zeit.strftime("%d%H%M")
+
+    class Meta:
+        verbose_name_plural = "Signaturen"
