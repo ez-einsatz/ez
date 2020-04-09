@@ -1,0 +1,48 @@
+  <div class="container">
+    <nav class="navbar">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+          ez
+          <!--<img src="http://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">-->
+        </a>
+
+        <!--<a class="navbar-item is-hidden-desktop" href="https://github.com/jgthms/bulma" target="_blank">
+        <span class="icon" style="color: #333;">
+          <i class="fab fa-github"></i>
+        </span>
+        </a>-->
+
+        <!--<a class="navbar-item is-hidden-desktop" href="https://twitter.com/jgthms" target="_blank">
+        <span class="icon" style="color: #55acee;">
+          <i class="fab fa-twitter"></i>
+        </span>
+        </a>-->
+
+        <!--<div class="navbar-burger burger" data-target="navMenuExample">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>-->
+      </div>
+
+      <div id="navbar-menu" class="navbar-menu">
+        <div class="navbar-start">
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link  is-active" href="/nachrichten">Nachrichten</a>
+            <div class="navbar-dropdown ">
+              <a class="navbar-item " href="/nachrichten/neu">Neue Nachricht</a>
+              <a class="navbar-item " href="/nachrichten/nachweisung">Nachweisung</a>
+            </div>
+          </div>
+
+        <div class="navbar-end">
+          {% url 'login' as login_url %}
+          {% if login_url %}
+            <a class="navbar-item is-hidden-desktop-only" href="{{ login_url }}">
+              Login
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </nav>
+  </div>
