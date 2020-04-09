@@ -28,10 +28,10 @@ class Funktion(models.Model):
 
 class Nachricht(models.Model):
     MELDERICHTUNG = (
-            (0, 'Eingang'),
-            (1, 'Ausgang'),
+            ('E', 'Eingang'),
+            ('A', 'Ausgang'),
         )
-    richtung = models.IntegerField(default=0, choices=MELDERICHTUNG)
+    richtung = models.CharField(max_length=1, choices=MELDERICHTUNG)
 
     notiz = models.BooleanField(verbose_name="Gesprächsnotiz", default=False)
 
@@ -63,9 +63,16 @@ class Nachricht(models.Model):
     befoerderungsvermerk = models.ForeignKey(Signatur, verbose_name="Beförderungsvermerk", blank=True, null=True, on_delete=models.CASCADE,related_name="befoerderungsvermerke",related_query_name="befoerderungsvermerk")
 
     verteiler = models.ManyToManyField(Funktion, blank=True)
+    sichtungsvermerk = models.ForeignKey(Signatur, verbose_name="Sichtungsvermerk", blank=True, null=True, on_delete=models.CASCADE,related_name="sichtungssvermerke",related_query_name="sichtungssvermerk")
 
     def __str__(self):
-        return self.inhalt
+        title = "Nachricht"
+        if self.notiz:
+            title = "Gesprächsnotiz"
+        title += " " + self.get_richtung_display()
+        title += " #"+str(self.id)
+
+        return title
 
     class Meta:
         verbose_name = "Nachricht"
