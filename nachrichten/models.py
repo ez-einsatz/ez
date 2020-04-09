@@ -13,6 +13,19 @@ class Signatur(models.Model):
         verbose_name = "Signatur"
         verbose_name_plural = "Signaturen"
 
+
+class Funktion(models.Model):
+
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Funktion"
+        verbose_name_plural = "Funktionen"
+
+
 class Nachricht(models.Model):
     MELDERICHTUNG = (
             (0, 'Eingang'),
