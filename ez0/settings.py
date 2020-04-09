@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'core',
     'nachrichten',
     'einheiten',
+    'bulma',
 ]
 
 MIDDLEWARE = [
