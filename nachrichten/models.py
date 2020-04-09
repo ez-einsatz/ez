@@ -56,11 +56,13 @@ class Nachricht(models.Model):
             (5, 'Fax'),
             (6, 'MIS'),
         )
-    aufnahmeweg = models.IntegerField(default=0, blank=True, null=True, choices=MELDEWEGE)
+    aufnahmeweg = models.IntegerField(blank=True, null=True, choices=MELDEWEGE)
     aufnahmevermerk = models.ForeignKey(Signatur, blank=True, null=True, on_delete=models.CASCADE,related_name="aufnahmevermerke",related_query_name="aufnahmevermerk")
     annahmevermerk = models.ForeignKey(Signatur, blank=True, null=True, on_delete=models.CASCADE,related_name="annahmevermerke",related_query_name="annahmevermerk")
-    befoerderungsweg = models.IntegerField(default=0, blank=True, null=True, choices=MELDEWEGE)
+    befoerderungsweg = models.IntegerField(blank=True, null=True, choices=MELDEWEGE)
     befoerderungsvermerk = models.ForeignKey(Signatur, verbose_name="Beförderungsvermerk", blank=True, null=True, on_delete=models.CASCADE,related_name="befoerderungsvermerke",related_query_name="befoerderungsvermerk")
+
+    verteiler = models.ManyToManyField(Funktion, blank=True)
 
     def __str__(self):
         return self.inhalt
