@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Bulma Site{% endblock %}
+
+{% block content %}
+
+{% if nachrichten_liste %}
+    <ul>
+    {% for nachricht in nachrichten_liste %}
+        <li><a href="/nachrichten/{{ nachricht.id }}/">{{ nachricht.inhalt }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+
+{% endblock content %}
