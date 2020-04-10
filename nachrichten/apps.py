@@ -1,5 +1,8 @@
 from django.apps import AppConfig
 
 
-class DokumentationConfig(AppConfig):
-    name = 'dokumentation'
+class NachrichtenConfig(AppConfig):
+    name = 'nachrichten'
+
+    def ready(self):
+        from . import signals

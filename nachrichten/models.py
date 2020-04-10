@@ -1,6 +1,13 @@
 from django.db import models
 #from django.contrib.auth.models import User
 
+from django_actionable_messages.message_card.actions import OpenUri, HttpPOST, ActionCard
+from django_actionable_messages.message_card.cards import MessageCard
+from django_actionable_messages.message_card.elements import Fact, ActionTarget
+from django_actionable_messages.message_card.inputs import TextInput
+from django_actionable_messages.message_card.sections import Section
+from django_actionable_messages.message_card.utils import OSType
+
 class Signatur(models.Model):
 
     zeit = models.DateTimeField(auto_now_add=True, blank=True)
@@ -74,6 +81,41 @@ class Nachricht(models.Model):
 
         return title
 
+    def message_card(self):
+        message_card = MessageCard(title=str(self), summary=str(self),
+                                   theme_color="666666")
+        message_card.add_sections(
+            Section(
+                facts=[
+                    Fact("Absender:", self.absender),
+                    Fact("Anschrift:", self.anschrift),
+                ],
+            )
+        )
+        message_card.add_sections(
+           Section(
+               text=self.inhalt,
+           )
+        )
+        return message_card
+
     class Meta:
         verbose_name = "Nachricht"
         verbose_name_plural = "Nachrichten"
+
+
+class MicrosoftTeamsWebhook(models.Model):
+
+    funktion = models.ForeignKey(Funktion, verbose_name="Funktion", blank=True, null=True, on_delete=models.CASCADE,related_name="funktionen",related_query_name="funktion")
+    webhook_url = models.CharField(max_length=200, verbose_name="Microsoft Teams Webhook URL")
+
+    def __str__(self):
+        if not self.funktion == None:
+            return str(self.funktion)
+        else:
+            return "Sichtung"
+
+
+    class Meta:
+        verbose_name = "Microsoft Teams Webhook"
+        verbose_name_plural = "Microsoft Teams Webhooks"

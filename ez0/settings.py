@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'nachrichten',
     'einheiten',
     'bulma',
+    "django_actionable_messages",
 ]
 
 MIDDLEWARE = [
