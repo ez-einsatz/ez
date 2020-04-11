@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load bulma_tags %}
+
+{% block content %}
+
+<h1  class="title">{{ form.title }}</h1>
+
+<div class="field">
+
+<form method="post">{% csrf_token %}
+    {{ form|bulma }}
+    <div class="field">
+      <button type="submit" class="button is-primary">Senden</button>
+    </div>
+</form>
+
+</div>
+{% endblock content %}

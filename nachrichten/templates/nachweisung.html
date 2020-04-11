@@ -13,6 +13,7 @@
         <tr>
           <th>#</th>
           <th>Richtung</th>
+          <th>Vorrangstufe</th>
           <th>Absender</th>
           <th>Anschrift</th>
           <th>Inhalt</th>
@@ -22,8 +23,9 @@
     <tbody>
       {% for nachricht in object_list %}
           <tr>
-            <td>{{ nachricht.id }}</td>
+            <td><a href="{{ nachricht.get_absolute_url }}">{{ nachricht.id }}</a></td>
             <td>{{ nachricht.get_richtung_display }}</td>
+            <td>{{ nachricht.get_vorrangstufe_display }}</td>
             <td>{{ nachricht.absender }}</td>
             <td>{{ nachricht.anschrift }}</td>
             <td>{{ nachricht.inhalt }}</td>

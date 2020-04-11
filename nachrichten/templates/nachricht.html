@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load bulma_tags %}
+
+{% block content %}
+
+<h1  class="title">{{ form.title }}</h1>
+
+<form method="post">{% csrf_token %}
+
+<div class="columns">
+  <div class="column">
+    <div class="field">
+      <label class="label">Richtung</label>
+      <div>{{ form.instance.get_richtung_display }}</div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="field">
+      <label class="label">Aufnahmevermerk</label>
+    </div>
+  </div>
+  <div class="column">
+    <div class="field">
+      <label class="label">Annahmevermerk</label>
+    </div>
+  </div>
+  <div class="column">
+    <div class="field">
+      <label class="label">Beförderungsvermerk</label>
+    </div>
+  </div>
+  <div class="column">
+    <div class="field">
+      <label class="label">Nachweisung</label>
+    </div>
+  </div>
+</div>
+
+<div class="columns">
+  <div class="column">
+    <div class="field">
+      <label class="label">Vorrangstufe</label>
+      <div>{{ form.instance.get_vorrangstufe_display }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">Absender</label>
+  <div>{{ form.instance.absender | escape }}</div>
+</div>
+<div class="field">
+  <label class="label">Anschrift</label>
+  <div>{{ form.instance.anschrift | escape }}</div>
+</div>
+<div class="field">
+  <label class="label">Betreff / Spruchkopf</label>
+  <div>{{ form.instance.betreff | escape }}</div>
+</div>
+<div class="field">
+  <label class="label">Inhalt</label>
+  <div>{{ form.instance.inhalt | escape }}</div>
+</div>
+
+    {{ form|bulma }}
+    <div class="field">
+      <button type="submit" class="button is-primary">Senden</button>
+    </div>
+</form>
+
+{% endblock content %}
