@@ -1,6 +1,8 @@
 from django.db import models
 #from django.contrib.auth.models import User
 
+from . import config
+
 from django_actionable_messages.message_card.actions import OpenUri, HttpPOST, ActionCard
 from django_actionable_messages.message_card.cards import MessageCard
 from django_actionable_messages.message_card.elements import Fact, ActionTarget
@@ -34,11 +36,7 @@ class Funktion(models.Model):
 
 
 class Nachricht(models.Model):
-    MELDERICHTUNG = (
-            ('E', 'Eingang'),
-            ('A', 'Ausgang'),
-        )
-    richtung = models.CharField(max_length=1, choices=MELDERICHTUNG)
+    richtung = models.CharField(max_length=1, choices=config.MELDERICHTUNG)
 
     notiz = models.BooleanField(verbose_name="Gesprächsnotiz", default=False)
 
@@ -46,27 +44,12 @@ class Nachricht(models.Model):
     anschrift = models.CharField(max_length=200)
     inhalt = models.TextField()
 
-    VORRANGSTUFEN = (
-            (0, 'einfach'), #eee
-            (1, 'sofort'), #sss
-            (2, 'BLITZ'), #bbb
-            #(3, 'STAATSNOT'), #aaa
-        )
-    vorrangstufe = models.IntegerField(default=0, choices=VORRANGSTUFEN)
+    vorrangstufe = models.IntegerField(default=0, choices=config.VORRANGSTUFEN)
 
-    MELDEWEGE = (
-            (0, 'Fe'),
-            (1, 'Fu'),
-            (2, 'Me'),
-            (3, 'Mail'),
-            (4, 'SMS'),
-            (5, 'Fax'),
-            (6, 'MIS'),
-        )
-    aufnahmeweg = models.IntegerField(blank=True, null=True, choices=MELDEWEGE)
+    aufnahmeweg = models.IntegerField(blank=True, null=True, choices=config.MELDEWEGE)
     aufnahmevermerk = models.ForeignKey(Signatur, blank=True, null=True, on_delete=models.CASCADE,related_name="aufnahmevermerke",related_query_name="aufnahmevermerk")
     annahmevermerk = models.ForeignKey(Signatur, blank=True, null=True, on_delete=models.CASCADE,related_name="annahmevermerke",related_query_name="annahmevermerk")
-    befoerderungsweg = models.IntegerField(blank=True, null=True, choices=MELDEWEGE)
+    befoerderungsweg = models.IntegerField(blank=True, null=True, choices=config.MELDEWEGE)
     befoerderungsvermerk = models.ForeignKey(Signatur, verbose_name="Beförderungsvermerk", blank=True, null=True, on_delete=models.CASCADE,related_name="befoerderungsvermerke",related_query_name="befoerderungsvermerk")
 
     verteiler = models.ManyToManyField(Funktion, blank=True)
