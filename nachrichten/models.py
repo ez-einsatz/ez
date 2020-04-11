@@ -82,6 +82,9 @@ class Nachricht(models.Model):
         )
         return message_card
 
+    def get_absolute_url(self):
+        return "/nachrichten/%i" % self.id
+
     class Meta:
         verbose_name = "Nachricht"
         verbose_name_plural = "Nachrichten"
