@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="de">
+
+  <head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Einsatz</title>
+    
+		<link rel="stylesheet" href="stylesheet.css">
+		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  </head>
+  
+  <body>
+
+    <script>
+			window.onload = function () {
+				startTime()
+			}
+		</script>
+
+    <script>
+      function startTime() {
+			var today = new Date();
+			var h = today.getHours();
+			var m = today.getMinutes();
+			var s = today.getSeconds();
+			var day = today.getDate();
+			var month = today.getMonth() + 1;
+			var year = today.getFullYear();
+			m = checkTime(m);
+			s = checkTime(s);
+			day = checkTime(day);
+			month = checkTime(month);
+			document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
+			document.getElementById('date').innerHTML = day + "." + month + "." + year;	
+			var t = setTimeout(startTime, 500);
+      }
+	      function checkTime(i) {
+				if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+				return i;
+      }
+    </script>
+
+    <header>
+			<!-- <img id="logo" src="Logo.png" alt="DRK OV Dieburg Logo">-->
+			<img id="logo" src="ez-logo.svg" alt="ez-logo">
+
+      <div id="page-head">
+				<div id="asdf">
+					<h1> Straßenfastnacht </h1>
+					<h2> Dieburg, Innenstadt </h2>
+					<h2> DRK OV Dieburg </h2>
+				</div>
+      </div>
+
+      <div id="clock">
+				<p id="time"> </p>
+				<p id="date"> </p>
+      </div>
+    </header>
+
+
+		<div id="content">
+
+			<div id="menu">
+				<div class="menu-item">
+					<img class="menu-icon" src="new.svg">
+					<p> Szenario <br> Erstellen </p>
+				</div>
+
+				<div class="menu-item">
+					<img class="menu-icon" src="load.svg">
+					<p> Szenario <br> Laden </p>
+				</div>
+
+				<div class="menu-item">
+					<img class="menu-icon" src="settings.svg">
+					<p> Einstellungen </p>
+				</div>
+
+				<div class="menu-item">
+					<img class="menu-icon" src="info.svg">
+					<p> Über Ez </p>
+				</div>
+			</div>
+
+		</div>
+
+
+		<footer>
+			<img id="footer-logo" src="ez-logo.svg" alt="ez-logo">
+			<p> ez money, ez life
+		</footer>
+
+	</body> 
+
+  
+</html>

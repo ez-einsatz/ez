@@ -1,0 +1,345 @@
+/*--- Variables ---*/
+
+:root {
+	--ez-background-grey: #e0dede;
+
+	--ez-grey: #555555;
+
+	--ez-red: #c8281a;
+}
+
+
+/*--- body ---*/
+
+html {
+  height: 100%;
+}
+
+body {
+	position: relative;
+	min-height: 100%;
+	margin: 0;
+	padding: 0;
+	background: var(--ez-background-grey);
+
+	font-family: sans-serif;
+}
+
+/*--- header ---*/
+
+
+header {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: space-between;
+	margin: 0;
+	padding: 0.5em;
+	width: calc(100% - 1em);
+	background: white;
+	box-shadow: 0 0 2px 1px grey;
+}
+
+header h1 {
+	margin: 0;
+	padding: 0;
+	font-size: 2em;
+	font-weight: bold;
+	font-family: sans-serif;
+}
+
+header h2 {
+	margin: 0;
+	padding: 0;
+	font-size: 1.5em;
+	font-weight: bold;
+	font-family: sans-serif;
+}
+
+#logo {
+	max-height: 7em;
+}
+
+#page-head {
+	flex-grow: 1;
+	padding: 0 0 0 1em;
+}
+
+#asdf {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100px;
+}
+
+#time {
+	padding: 0;
+	margin: 0;
+	font-size: 3em;
+	text-align: center;
+}
+
+#date {
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	font-size: 2em;
+}
+
+#clock {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	font-family: sans-serif;
+}
+
+
+/*--- footer ---*/
+
+footer {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	background: var(--ez-grey);
+	height: 48px;
+	box-shadow: 0 0 2px 1px grey;
+}
+
+footer p {
+	margin: 0;
+	padding: 0 1em;
+	color: white;
+}
+
+#footer-logo {
+	height: 32px;
+}
+
+
+/*--- content ---*/
+
+#content {
+	height: 100%;
+	padding: 1em 0 48px 0;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+aside {
+	width: 25%;
+	background: white;
+	box-shadow: 0 0 2px 1px grey;
+	margin: 0 0 1em 0;
+}
+
+aside h2 {
+	padding: 0.5em;
+	margin: 0;
+}
+
+
+/*--- article ---*/
+
+article {
+	width: 100%;
+	background-color: var(--ez-background-grey);
+}
+
+article section {
+	padding: 0.5em;
+	margin: 0 1em 1em 1em;
+	background: white;
+	box-shadow: 0 0 2px 1px grey;
+}
+
+article section h2{
+	padding: 0.25em 0.5em;
+	margin: 0;
+}
+
+article section h3{
+	padding: 0.5em;
+	margin: 0;
+}
+
+/*--- navigation ---*/
+
+nav {
+	width: 200px;
+	margin: 0 0 1em 0;
+	background: white;
+	box-shadow: 0 0 2px 1px grey;
+	z-index: 1;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+    
+	background-color: var(--ez-grey);
+
+	list-style-type: none;
+	overflow: auto;
+}
+
+
+li a {
+	display: block;
+    
+	color: white;
+	text-decoration: none;
+	text-align: center;
+	font-weight: bold;
+	padding: 1em;
+}
+
+li a:hover:not(.active) {
+	background-color: black;
+	color: white;
+}
+
+.active {
+	background-color: var(--ez-red);
+	color: white;
+}
+
+
+/*--- Input ---*/
+
+.input-form{
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+input[type=text] {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+input[type=button] {
+	width: 100%;
+	margin: 8px 0;
+
+	background-color: #555;
+	color: white;
+	padding: 14px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+input[type=button]:hover {
+	background-color: var(--ez-red);
+}
+
+.field {
+	width: 200px;
+	margin: 0.5em;
+	border-radius: 4px;
+}
+
+.field label {
+	padding: 0 0 0 4px;
+}
+
+.button-field {
+	width: 200px;
+	margin: 0.5em;
+	padding: 1em 0 0 0;
+}
+
+
+/*--- Tabelle ---*/
+
+table, th, td {
+	border: 1px solid var(--ez-grey);
+	border-collapse: collapse;
+}
+
+table {
+	width: 100%;
+}
+
+th, td {
+	padding: 5px;
+	text-align: left;
+}
+
+th {
+	background-color: var(--ez-grey);
+	color: white;
+}
+
+tr:nth-child(odd) {
+	background-color: white;
+}
+
+tr:nth-child(even) {
+	background-color: var(--ez-background-grey);
+}
+
+tr:hover {
+	color: white;
+	background-color: var(--ez-red);
+}
+
+
+/*--- Menu ---*/
+
+#menu {
+	width: 100%;
+	margin: 1em 1em 0 1em;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.menu-item {
+	width: 250px;
+	height:100px;
+	padding: 0px;
+	margin: 0em 1em 2em 1em;
+
+	display: flex;
+	justify-content: flex-start;
+	align-items: center; 
+
+	background: var(--ez-grey);
+	box-shadow: 0 0 2px 1px grey;
+}
+
+.menu-item p {
+	text-align: left;
+	font-family: sans-serif;
+	font-size: 1.2em;
+	font-weight: bold;
+	color: white;
+}
+
+.menu-item:hover {
+	background: var(--ez-red);
+	box-shadow: 0 0 2px 1px grey;
+
+}
+
+.menu-icon {
+	width: 50px;
+	height: 50px;
+	padding: 1.5em;
+}
+

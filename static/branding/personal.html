@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="de">
+
+  <head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Einsatz</title>
+    
+		<link rel="stylesheet" href="stylesheet.css">
+		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  </head>
+  
+  <body>
+
+    <script>
+			window.onload = function () {
+				startTime()
+				document.getElementById("Hinzufügen").onclick = addPerson
+			}
+		</script>
+
+    <script>
+      function startTime() {
+			var today = new Date();
+			var h = today.getHours();
+			var m = today.getMinutes();
+			var s = today.getSeconds();
+			var day = today.getDate();
+			var month = today.getMonth() + 1;
+			var year = today.getFullYear();
+			m = checkTime(m);
+			s = checkTime(s);
+			day = checkTime(day);
+			month = checkTime(month);
+			document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
+			document.getElementById('date').innerHTML = day + "." + month + "." + year;	
+			var t = setTimeout(startTime, 500);
+      }
+	      function checkTime(i) {
+				if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+				return i;
+      }
+    </script>
+
+    <header>
+			<!-- <img id="logo" src="Logo.png" alt="DRK OV Dieburg Logo">-->
+			<img id="logo" src="ez-logo.svg" alt="ez-logo">
+
+      <div id="page-head">
+				<div id="asdf">
+					<h1> Straßenfastnacht </h1>
+					<h2> Dieburg, Innenstadt </h2>
+					<h2> DRK OV Dieburg </h2>
+				</div>
+      </div>
+
+      <div id="clock">
+				<p id="time"> </p>
+				<p id="date"> </p>
+      </div>
+    </header>
+
+		<div id="content">
+
+		  <nav>
+		    <ul>
+					<li><a class="active"> Personal </a></li>
+					<li><a> Einsatz </a></li>
+					<li><a> Hilfeleistungen </a></li>
+					<li><a> Meldung </a></li>
+					<li><a> Einstzübersicht </a></li>
+					<li><a> Drucken </a></li>
+		    </ul>
+		  </nav>
+
+			<article>
+				<section>
+					<h2> Personal </h2>
+				</section>
+
+				<section>
+					<h3> Helfer hinzfügen </h3>
+						<div class="input-form">
+							<div class="field field-1">
+								<label> Vorname: </label>
+						  	<input type="text" id="Vorname">
+							</div>
+							<div class="field field-2">
+								<label> Nachname: </label>
+								<input type="text" id="Nachname">
+							</div>
+							<div class="field field-3">
+								<label> Qualifikation: </label>
+								<input type="text" id="Qualifikation">
+							</div>
+							<div class="field field-4">
+								<label> Ortsverein: </label>
+								<input type="text" id="Ortsverein">
+							</div>
+							<div class="button-field">
+								<input type="button" id="Hinzufügen" class="field" value="Hinzufügen">
+							</div>
+						</div>
+				</section>
+
+				<script>
+					function addPerson() {
+						//get data
+						first = document.getElementById("Vorname").value
+						last = document.getElementById("Nachname").value
+						quali = document.getElementById("Qualifikation").value
+						OV = document.getElementById("Ortsverein").value
+
+						//add to table
+						if(first != "" && last != "")
+							tableRef = document.getElementById("Helferübersicht")
+							newRow = tableRef.insertRow(1)
+
+							newCell = newRow.insertCell(0);
+							newText = document.createTextNode(first + " " + last);
+							newCell.appendChild(newText);
+
+							newCell = newRow.insertCell(1);
+							newText = document.createTextNode(quali);
+							newCell.appendChild(newText);
+
+							newCell = newRow.insertCell(2);
+							newText = document.createTextNode(OV);
+							newCell.appendChild(newText);
+					}
+				</script>
+
+				<section>
+					<h3>Helferübersicht</h3>
+					<table id="Helferübersicht">
+						<tr>
+						  <th>Name</th>
+						  <th>Qualifikation</th>
+						  <th>Ortsverein</th>
+						</tr>
+						<tr>
+						  <td>Bill Gates</td>
+						  <td>Reich</td>
+						  <td>Trump Nation</td>
+						</tr>
+						<tr>
+						  <td>Bill Gates</td>
+						  <td>Reich</td>
+						  <td>Trump Nation</td>
+						</tr>
+						<tr>
+						  <td>Bill Gates</td>
+						  <td>Reich</td>
+						  <td>Trump Nation</td>
+						</tr>
+						<tr>
+					  	<td>Bill Gates</td>
+						  <td>Reich</td>
+						  <td>Trump Nation</td>
+						</tr>
+						<tr>
+						  <td>Bill Gates</td>
+						  <td>Reich</td>
+						  <td>Trump Nation</td>
+						</tr>
+						<tr>
+						  <td>Bill Gates</td>
+						  <td>Reich</td>
+						  <td>Trump Nation</td>
+						</tr>
+					</table>
+				</section>
+
+			</article>
+
+			<aside>
+				<h2> Nachrichten </h2>
+			</aside>
+
+		</div>
+
+		<footer>
+			<img id="footer-logo" src="ez-logo.svg" alt="ez-logo">
+			<p> ez money, ez life
+		</footer>
+
+	</body> 
+
+  
+</html>
