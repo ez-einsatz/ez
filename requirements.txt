@@ -4,3 +4,4 @@ django-phonenumber-field[phonenumberslite]
 django-mailbox
 django-actionable-messages
 django-bulma
+Pillow
