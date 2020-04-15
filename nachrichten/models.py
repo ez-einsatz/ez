@@ -1,6 +1,6 @@
 from django.db import models
 #from django.contrib.auth.models import User
-
+from django.conf import settings
 from . import config
 
 from django_actionable_messages.message_card.actions import OpenUri, HttpPOST, ActionCard
@@ -80,6 +80,11 @@ class Nachricht(models.Model):
                text=self.inhalt,
            )
         )
+        message_card.add_actions([
+            OpenUri(name="Anzeigen", targets=[
+                ActionTarget(OSType.DEFAULT, settings.BASE_URL+self.get_absolute_url())
+            ])
+        ])
         return message_card
 
     def get_absolute_url(self):
