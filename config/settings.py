@@ -31,17 +31,18 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'core',
+    'nachrichten',
+    'einheiten',
+    'bulma',
+    'django_mailbox',
+    "django_actionable_messages",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
-    'nachrichten',
-    'einheiten',
-    'bulma',
-    "django_actionable_messages",
 ]
 
 MIDDLEWARE = [
