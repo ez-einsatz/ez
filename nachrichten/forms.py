@@ -31,7 +31,7 @@ class NeueNotiz(forms.ModelForm):
 
     class Meta():
         model = models.Nachricht
-        fields = ['richtung','notiz','vorrangstufe','anschrift','absender','inhalt']
+        fields = ['richtung','vorrangstufe','anschrift','absender','inhalt']
 
 class Nachricht(forms.ModelForm):
 
