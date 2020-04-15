@@ -7,6 +7,7 @@
           <img src="{% static 'branding/ez-logo.svg' %}" alt="ez logo">
         </a>
 
+
         <!--<a class="navbar-item is-hidden-desktop" href="https://github.com/jgthms/bulma" target="_blank">
         <span class="icon" style="color: #333;">
           <i class="fab fa-github"></i>
@@ -27,7 +28,9 @@
       </div>
 
       <div id="navbar-menu" class="navbar-menu">
-        
+
+        {% if user.is_authenticated %}
+
         <div class="navbar-start">
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link  is-active" href="/nachrichten">Nachrichten</a>
@@ -41,13 +44,19 @@
         </div>
 
         <div class="navbar-end">
-          {% url 'login' as login_url %}
-          {% if login_url %}
-            <a class="navbar-item is-hidden-desktop-only" href="{{ login_url }}">
-              Login
-            </a>
-          {% endif %}
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link  is-active" href="/accounts/profile/">{{ user.username }}</a>
+              <div class="navbar-dropdown ">
+                <a class="navbar-item " href="{% url 'password_change' %}">Passwort ändern</a>
+                <a class="navbar-item " href="{% url 'logout' %}">Logout</a>
+              </div>
+            </div>
         </div>
+        {% else %}
+        <div class="navbar-end">
+            <a class="navbar-item is-hidden-desktop-only" href="{% url 'login' %}">Login</a>
+        </div>
+        {% endif %}
 
       </div>
     </nav>
