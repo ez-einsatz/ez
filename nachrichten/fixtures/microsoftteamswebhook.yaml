@@ -1,0 +1,24 @@
+- model: nachrichten.microsoftteamswebhook
+  pk: 1
+  fields: {funktion: null, webhook_url: 'https://outlook.office.com/webhook/c7e10c73-24d1-408e-b253-02a1749bd3e1@5981a209-55f5-435b-a3a5-2b09a8aac697/IncomingWebhook/539843d09d8e4999b0b1fa298dcddee1/b210a4f2-04a0-4794-a003-86889617c176'}
+- model: nachrichten.microsoftteamswebhook
+  pk: 2
+  fields: {funktion: 3, webhook_url: 'https://outlook.office.com/webhook/c7e10c73-24d1-408e-b253-02a1749bd3e1@5981a209-55f5-435b-a3a5-2b09a8aac697/IncomingWebhook/79c8d9f68a09435aa9320f36b2a0433d/b210a4f2-04a0-4794-a003-86889617c176'}
+- model: nachrichten.microsoftteamswebhook
+  pk: 3
+  fields: {funktion: 4, webhook_url: 'https://outlook.office.com/webhook/c7e10c73-24d1-408e-b253-02a1749bd3e1@5981a209-55f5-435b-a3a5-2b09a8aac697/IncomingWebhook/77a4e905e7a340f596fc99b528940d26/b210a4f2-04a0-4794-a003-86889617c176'}
+- model: nachrichten.microsoftteamswebhook
+  pk: 4
+  fields: {funktion: 2, webhook_url: 'https://outlook.office.com/webhook/c7e10c73-24d1-408e-b253-02a1749bd3e1@5981a209-55f5-435b-a3a5-2b09a8aac697/IncomingWebhook/f407d0eb9b584417ae56e9cc46898146/b210a4f2-04a0-4794-a003-86889617c176'}
+- model: nachrichten.microsoftteamswebhook
+  pk: 5
+  fields: {funktion: 5, webhook_url: 'https://outlook.office.com/webhook/c7e10c73-24d1-408e-b253-02a1749bd3e1@5981a209-55f5-435b-a3a5-2b09a8aac697/IncomingWebhook/e0108a88cc8345208d340ccbff152511/b210a4f2-04a0-4794-a003-86889617c176'}
+- model: nachrichten.microsoftteamswebhook
+  pk: 6
+  fields: {funktion: 1, webhook_url: 'https://outlook.office.com/webhook/c7e10c73-24d1-408e-b253-02a1749bd3e1@5981a209-55f5-435b-a3a5-2b09a8aac697/IncomingWebhook/f82df3bc5e264ef4b5d889637917a824/b210a4f2-04a0-4794-a003-86889617c176'}
+- model: nachrichten.microsoftteamswebhook
+  pk: 7
+  fields: {funktion: 6, webhook_url: 'https://outlook.office.com/webhook/c7e10c73-24d1-408e-b253-02a1749bd3e1@5981a209-55f5-435b-a3a5-2b09a8aac697/IncomingWebhook/c4e38bbf01c04a739d69f901e175b07d/b210a4f2-04a0-4794-a003-86889617c176'}
+- model: nachrichten.microsoftteamswebhook
+  pk: 8
+  fields: {funktion: 7, webhook_url: 'https://outlook.office.com/webhook/c7e10c73-24d1-408e-b253-02a1749bd3e1@5981a209-55f5-435b-a3a5-2b09a8aac697/IncomingWebhook/6708498b8b4f4600bf3da43f8faf32ff/b210a4f2-04a0-4794-a003-86889617c176'}

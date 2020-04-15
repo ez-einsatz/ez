@@ -1,0 +1,21 @@
+- model: nachrichten.funktion
+  pk: 1
+  fields: {name: Leiter}
+- model: nachrichten.funktion
+  pk: 2
+  fields: {name: S1}
+- model: nachrichten.funktion
+  pk: 3
+  fields: {name: S2}
+- model: nachrichten.funktion
+  pk: 4
+  fields: {name: S3}
+- model: nachrichten.funktion
+  pk: 5
+  fields: {name: S4}
+- model: nachrichten.funktion
+  pk: 6
+  fields: {name: S5}
+- model: nachrichten.funktion
+  pk: 7
+  fields: {name: S6}
