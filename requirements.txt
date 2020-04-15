@@ -4,3 +4,4 @@ git+https://github.com/coddingtonbear/django-mailbox.git@c8751f0c9ae85e43f8e775e
 django-actionable-messages
 django-bulma
 Pillow
+PyYAML
