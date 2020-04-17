@@ -38,7 +38,22 @@ class Nachricht(forms.ModelForm):
     def title(self):
         return self.instance
 
-    verteiler = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple,queryset=models.Funktion.objects.all())
+    verteiler = forms.ModelMultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple,
+        queryset=models.Funktion.objects.all(),
+        required=False
+    )
+
+    aufnahmeweg = forms.ChoiceField(
+        choices=config.MELDEWEGE,
+        widget=forms.RadioSelect(),
+        label="Aufnahmevermerk"
+    )
+    befoerderungsweg = forms.ChoiceField(
+        choices=config.MELDEWEGE,
+        widget=forms.RadioSelect(),
+        label="Beförderungsvermerk"
+    )
 
     class Meta():
         model = models.Nachricht

@@ -3,69 +3,88 @@
 
 {% block content %}
 
-<h1  class="title">{{ form.title }}</h1>
 
-<form method="post">{% csrf_token %}
+<form class="box" method="post">{% csrf_token %}
+  <h1  class="title">{{ form.title }}</h1>
 
-<div class="columns">
-  <div class="column">
-    <div class="field">
-      <label class="label">Richtung</label>
-      <div>{{ form.instance.get_richtung_display }}</div>
-    </div>
-  </div>
-  <div class="column">
-    <div class="field">
-      <label class="label">Aufnahmevermerk</label>
-    </div>
-  </div>
-  <div class="column">
-    <div class="field">
-      <label class="label">Annahmevermerk</label>
-    </div>
-  </div>
-  <div class="column">
-    <div class="field">
-      <label class="label">Beförderungsvermerk</label>
-    </div>
-  </div>
-  <div class="column">
-    <div class="field">
-      <label class="label">Nachweisung</label>
-    </div>
-  </div>
-</div>
+  <div class="box">
+    <!--<h2 class="subtitle">Nachrichtenkopf</h2>-->
 
-<div class="columns">
-  <div class="column">
-    <div class="field">
-      <label class="label">Vorrangstufe</label>
-      <div>{{ form.instance.get_vorrangstufe_display }}</div>
+    <div class="columns">
+      <div class="column">
+        <div class="field">
+          <label class="label">Richtung</label>
+          <div>{{ form.instance.get_richtung_display }}</div>
+        </div>
+      </div>
+      {% if form.instance.richtung == 'E' or form.instance.richtung == 'R' %}
+      <div class="column">
+        <div class="field">
+          {{ form.aufnahmeweg | bulma }}
+          <button type="submit" name="aufnahmevermerk" class="button">abzeichnen</button>
+        </div>
+      </div>
+      {% endif %}
+      {% if form.instance.richtung == 'A' or form.instance.richtung == 'R' %}
+      <div class="column">
+        <div class="field">
+          <label class="label">Annahmevermerk</label>
+          <button type="submit" name="annahmevermerk" class="button">abzeichnen</button>
+        </div>
+      </div>
+      <div class="column">
+        <div class="field">
+          {{ form.befoerderungsweg | bulma }}
+          <button type="submit" name="befoerderungsvermerk" class="button">abzeichnen</button>
+        </div>
+      </div>
+      {% endif %}
+      <div class="column">
+        <div class="field">
+          <label class="label">Nachweisung</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns">
+      <div class="column">
+        <div class="field">
+          <label class="label">Vorrangstufe</label>
+          <div>{{ form.instance.get_vorrangstufe_display }}</div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+  <div class="box">
+    <!--<h2 class="subtitle"></h2>-->
 
-<div class="field">
-  <label class="label">Absender</label>
-  <div>{{ form.instance.absender | escape }}</div>
-</div>
-<div class="field">
-  <label class="label">Anschrift</label>
-  <div>{{ form.instance.anschrift | escape }}</div>
-</div>
-<div class="field">
-  <label class="label">Betreff / Spruchkopf</label>
-  <div>{{ form.instance.betreff | escape }}</div>
-</div>
-<div class="field">
-  <label class="label">Inhalt</label>
-  <div>{{ form.instance.inhalt | escape }}</div>
-</div>
-
-    {{ form|bulma }}
     <div class="field">
-      <button type="submit" class="button is-primary">Senden</button>
+      <label class="label">Absender</label>
+      <div>{{ form.instance.absender | escape }}</div>
     </div>
+    <div class="field">
+      <label class="label">Anschrift</label>
+      <div>{{ form.instance.anschrift | escape }}</div>
+    </div>
+    <div class="field">
+      <label class="label">Betreff / Spruchkopf</label>
+      <div>{{ form.instance.betreff | escape }}</div>
+    </div>
+    <div class="field">
+      <label class="label">Inhalt</label>
+      <div>{{ form.instance.inhalt | escape }}</div>
+    </div>
+  </div>
+  <div class="box">
+    <h2 class="subtitle">Sichter</h2>
+
+    <div class="field">
+      {{ form.verteiler | bulma }}
+    </div>
+  </div>
+  <div class="field">
+    <button type="submit" class="button is-primary">Senden</button>
+  </div>
 </form>
 
 {% endblock content %}
