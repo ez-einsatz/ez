@@ -5,3 +5,5 @@ django-actionable-messages
 django-bulma
 Pillow
 PyYAML
+django-extensions
+pygraphviz
