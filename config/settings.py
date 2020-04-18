@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'core',
     'nachrichten',
+    'einsatztagebuch',
     'einheiten',
     'bulma',
     'django_mailbox',

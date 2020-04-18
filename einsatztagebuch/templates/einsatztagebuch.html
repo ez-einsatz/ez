@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="title">Einsatztagebuch</h1>
+
+<ul>
+</ul>
+
+<div class="table-container">
+  <table class="table is-bordered is-striped ">
+    <thead>
+        <tr>
+          <th>#</th>
+        </tr>
+      </thead>
+    <tbody>
+      {% for etb_eintrag in object_list %}
+          <tr>
+            <td><a href="{{ etb_eintrag.get_absolute_url }}">{{ etb_eintrag.id }}</a></td>
+          </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock content %}
