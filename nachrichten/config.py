@@ -3,6 +3,8 @@ MELDERICHTUNG = (
         ('E', 'Eingang'),
         ('A', 'Ausgang'),
         ('R', 'Relay'),
+        ('G', 'Gespräch'),
+        ('N', 'Notiz'),
     )
 
 VORRANGSTUFEN = (

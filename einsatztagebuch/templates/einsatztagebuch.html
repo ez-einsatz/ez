@@ -11,14 +11,22 @@
   <table class="table is-bordered is-striped ">
     <thead>
         <tr>
-          <th>#</th>
+          <th style="text-align: center; vertical-align: middle;">#</th>
+          <th style="text-align: center; vertical-align: middle;">Information<br>Lage / Entwicklung / Auftrag / Meldung / Befehl</th>
+          <th style="text-align: center; vertical-align: middle;">Maßnahme<br>Meldung / Befehl / Anforderung / Absprachen</th>
         </tr>
       </thead>
     <tbody>
       {% for etb_eintrag in object_list %}
-          <tr>
-            <td><a href="{{ etb_eintrag.get_absolute_url }}">{{ etb_eintrag.id }}</a></td>
-          </tr>
+        <tr>
+          <td><a href="{{ etb_eintrag.get_absolute_url }}">{{ etb_eintrag.id }}</a></td>
+        </tr>
+        <tr>
+          <td><a href="{{ etb_eintrag.information }}">{{ etb_eintrag.id }}</a></td>
+        </tr>
+        <tr>
+          <td><a href="{{ etb_eintrag.massnahme }}">{{ etb_eintrag.id }}</a></td>
+        </tr>
       {% endfor %}
     </tbody>
   </table>

@@ -1,5 +1,5 @@
 from django.db import models
-#from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 from django.conf import settings
 from . import config
 
@@ -9,19 +9,6 @@ from django_actionable_messages.message_card.elements import Fact, ActionTarget
 from django_actionable_messages.message_card.inputs import TextInput
 from django_actionable_messages.message_card.sections import Section
 from django_actionable_messages.message_card.utils import OSType
-
-class Signatur(models.Model):
-
-    zeit = models.DateTimeField(auto_now_add=True, blank=True)
-    #user = models.ForeignKey(User)
-
-    def __str__(self):
-        return self.zeit.strftime("%d%H%M%b%-y").lower()
-
-    class Meta:
-        verbose_name = "Signatur"
-        verbose_name_plural = "Signaturen"
-
 
 class Funktion(models.Model):
 
@@ -34,11 +21,8 @@ class Funktion(models.Model):
         verbose_name = "Funktion"
         verbose_name_plural = "Funktionen"
 
-
 class Nachricht(models.Model):
     richtung = models.CharField(max_length=1, choices=config.MELDERICHTUNG)
-
-    notiz = models.BooleanField(verbose_name="Gesprächsnotiz", default=False)
 
     absender = models.CharField(max_length=200)
     anschrift = models.CharField(max_length=200)
@@ -46,20 +30,8 @@ class Nachricht(models.Model):
 
     vorrangstufe = models.IntegerField(default=0, choices=config.VORRANGSTUFEN)
 
-    aufnahmeweg = models.IntegerField(blank=True, null=True, choices=config.MELDEWEGE)
-    aufnahmevermerk = models.ForeignKey(Signatur, blank=True, null=True, on_delete=models.CASCADE,related_name="aufnahmevermerke",related_query_name="aufnahmevermerk")
-    annahmevermerk = models.ForeignKey(Signatur, blank=True, null=True, on_delete=models.CASCADE,related_name="annahmevermerke",related_query_name="annahmevermerk")
-    befoerderungsweg = models.IntegerField(blank=True, null=True, choices=config.MELDEWEGE)
-    befoerderungsvermerk = models.ForeignKey(Signatur, verbose_name="Beförderungsvermerk", blank=True, null=True, on_delete=models.CASCADE,related_name="befoerderungsvermerke",related_query_name="befoerderungsvermerk")
-
-    verteiler = models.ManyToManyField(Funktion, blank=True)
-    sichtungsvermerk = models.ForeignKey(Signatur, verbose_name="Sichtungsvermerk", blank=True, null=True, on_delete=models.CASCADE,related_name="sichtungssvermerke",related_query_name="sichtungssvermerk")
-
     def __str__(self):
-        title = "Nachricht"
-        if self.notiz:
-            title = "Gesprächsnotiz"
-        title += " " + self.get_richtung_display()
+        title = self.get_richtung_display()
         title += " #"+str(self.id)
 
         return title
@@ -94,6 +66,94 @@ class Nachricht(models.Model):
         verbose_name = "Nachricht"
         verbose_name_plural = "Nachrichten"
 
+class Aufnahmevermerk(models.Model):
+
+    zeit = models.DateTimeField(auto_now_add=True)
+    benutzer = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    nachricht = models.OneToOneField(Nachricht,on_delete=models.CASCADE,primary_key=True)
+    weg = models.IntegerField(null=True, choices=config.MELDEWEGE)
+
+    def __str__(self):
+        r = str(self.get_weg_display()) + ' '
+        r += self.zeit.strftime("%d%H%M%b%-y").lower()
+        if self.benutzer:
+            r += ' '+str(self.benutzer)
+        return r
+
+    class Meta:
+        verbose_name = "Aufnahmevermerk"
+        verbose_name_plural = "Aufnahmevermerke"
+
+class Annahmevermerk(models.Model):
+
+    zeit = models.DateTimeField(auto_now_add=True)
+    benutzer = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    nachricht = models.OneToOneField(Nachricht,on_delete=models.CASCADE,primary_key=True)
+
+    def __str__(self):
+        r = self.zeit.strftime("%d%H%M%b%-y").lower()
+        if self.benutzer:
+            r += ' '+str(self.benutzer)
+        return r
+
+    class Meta:
+        verbose_name = "Annahmevermerk"
+        verbose_name_plural = "Annahmevermerke"
+
+class Befoerderungsvermerk(models.Model):
+
+    zeit = models.DateTimeField(auto_now_add=True)
+    benutzer = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    nachricht = models.OneToOneField(Nachricht,on_delete=models.CASCADE,primary_key=True)
+    weg = models.IntegerField(null=True, choices=config.MELDEWEGE)
+
+    def __str__(self):
+        r = str(self.get_weg_display()) + ' '
+        r += self.zeit.strftime("%d%H%M%b%-y").lower()
+        if self.benutzer:
+            r += ' '+str(self.benutzer)
+        return r
+
+    class Meta:
+        verbose_name = "Beförderungsvermerk"
+        verbose_name_plural = "Beförderungsvermerke"
+
+class Sichtungsvermerk(models.Model):
+
+    zeit = models.DateTimeField(auto_now_add=True)
+    benutzer = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    nachricht = models.OneToOneField(Nachricht,on_delete=models.CASCADE,primary_key=True)
+
+    def __str__(self):
+        r = self.zeit.strftime("%d%H%M%b%-y").lower()
+        if self.benutzer:
+            r += ' '+str(self.benutzer)
+        return r
+
+    class Meta:
+        verbose_name = "Sichtungsvermerk"
+        verbose_name_plural = "Sichtungsvermerke"
+
+class Verteilungsvermerk(models.Model):
+
+    zeit = models.DateTimeField(auto_now_add=True)
+    benutzer = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    nachricht = models.ForeignKey(Nachricht,on_delete=models.CASCADE,related_name='verteilungsvermerke',null=True)
+
+    verteiler = models.ManyToManyField(Funktion)
+
+    def __str__(self):
+        r = ''
+        for funktion in self.verteiler.all():
+            r += str(funktion) + ' '
+        r += self.zeit.strftime("%d%H%M%b%-y").lower()
+        if self.benutzer:
+            r += ' '+str(self.benutzer)
+        return r
+
+    class Meta:
+        verbose_name = "Verteilungsvermerk"
+        verbose_name_plural = "Verteilungsvermerke"
 
 class MicrosoftTeamsWebhook(models.Model):
 

@@ -4,14 +4,16 @@ from django.db.models import ManyToManyField
 
 from . import models
 
-admin.site.register(models.Signatur)
-admin.site.register(models.Funktion)
-admin.site.register(models.MicrosoftTeamsWebhook)
-
-class NachrichtAdmin(admin.ModelAdmin):
+class VerteilungsvermerkAdmin(admin.ModelAdmin):
     #inlines = (VerteilerInline,)
     formfield_overrides = {
         ManyToManyField: {'widget': CheckboxSelectMultiple},
     }
 
-admin.site.register(models.Nachricht,NachrichtAdmin)
+admin.site.register(models.Funktion)
+admin.site.register(models.MicrosoftTeamsWebhook)
+admin.site.register(models.Nachricht)
+admin.site.register(models.Annahmevermerk)
+admin.site.register(models.Befoerderungsvermerk)
+admin.site.register(models.Verteilungsvermerk,VerteilungsvermerkAdmin)
+admin.site.register(models.Sichtungsvermerk)

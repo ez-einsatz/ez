@@ -3,8 +3,8 @@
 
 {% block content %}
 
+<div class="box">
 
-<form class="box" method="post">{% csrf_token %}
   <h1  class="title">{{ form.title }}</h1>
 
   <div class="box">
@@ -14,29 +14,44 @@
       <div class="column">
         <div class="field">
           <label class="label">Richtung</label>
-          <div>{{ form.instance.get_richtung_display }}</div>
+          <div>{{ object.get_richtung_display }}</div>
         </div>
       </div>
-      {% if form.instance.richtung == 'E' or form.instance.richtung == 'R' %}
+      {% if object.richtung == 'E' or object.richtung == 'R' %}
       <div class="column">
         <div class="field">
-          {{ form.aufnahmeweg | bulma }}
-          <button type="submit" name="aufnahmevermerk" class="button">abzeichnen</button>
+          <label class="label">Aufnahmevermerk</label>
+          <div>{{ object.get_aufnahmeweg_display }} {{ object.aufnahmevermerk }}</div>
         </div>
       </div>
       {% endif %}
-      {% if form.instance.richtung == 'A' or form.instance.richtung == 'R' %}
+      {% if object.richtung == 'A' or object.richtung == 'R' %}
       <div class="column">
-        <div class="field">
-          <label class="label">Annahmevermerk</label>
-          <button type="submit" name="annahmevermerk" class="button">abzeichnen</button>
-        </div>
+        <form action="{% url 'annahmevermerk' pk=object.id %}" method="post">{% csrf_token %}
+          <div class="field">
+            <label class="label">Annahmevermerk</label>
+            {% if object.annahmevermerk %}
+            <div>{{ object.annahmevermerk }}</div>
+            {% else %}
+            {% if not object.befoerderungsvermerk %}
+            <button type="submit" class="button">Annahme vermerken</button>
+            {% endif %}
+            {% endif %}
+          </div>
+        </form>
       </div>
       <div class="column">
-        <div class="field">
-          {{ form.befoerderungsweg | bulma }}
-          <button type="submit" name="befoerderungsvermerk" class="button">abzeichnen</button>
-        </div>
+        <form action="{% url 'befoerderungsvermerk' pk=object.id %}" method="post">{% csrf_token %}
+          <div class="field">
+            {% if object.befoerderungsvermerk %}
+            <label class="label">Beförderungsvermerk</label>
+            <div>{{ object.get_befoerderungsweg_display }} {{ object.befoerderungsvermerk }}</div>
+            {% else %}
+            {{ befoerderungsvermerk.weg | bulma }}
+            <button type="submit" class="button">Beförderung vermerken</button>
+            {% endif %}
+          </div>
+        </form>
       </div>
       {% endif %}
       <div class="column">
@@ -50,7 +65,7 @@
       <div class="column">
         <div class="field">
           <label class="label">Vorrangstufe</label>
-          <div>{{ form.instance.get_vorrangstufe_display }}</div>
+          <div>{{ object.get_vorrangstufe_display }}</div>
         </div>
       </div>
     </div>
@@ -60,31 +75,62 @@
 
     <div class="field">
       <label class="label">Absender</label>
-      <div>{{ form.instance.absender | escape }}</div>
+      <div>{{ object.absender | escape }}</div>
     </div>
     <div class="field">
       <label class="label">Anschrift</label>
-      <div>{{ form.instance.anschrift | escape }}</div>
+      <div>{{ object.anschrift | escape }}</div>
     </div>
     <div class="field">
       <label class="label">Betreff / Spruchkopf</label>
-      <div>{{ form.instance.betreff | escape }}</div>
+      <div>{{ object.betreff | escape }}</div>
     </div>
     <div class="field">
       <label class="label">Inhalt</label>
-      <div>{{ form.instance.inhalt | escape }}</div>
+      <div>{{ object.inhalt | escape }}</div>
     </div>
   </div>
   <div class="box">
     <h2 class="subtitle">Sichter</h2>
-    <div class="field">
-      {{ form.verteiler | bulma }}
+    <div class="columns">
+      <div class="column">
+        <form action="{% url 'sichtungsvermerk' pk=object.id %}" method="post">{% csrf_token %}
+          <div class="field">
+            <label class="label">Sichtungsvermerk</label>
+            {% if object.sichtungsvermerk %}
+            <div>{{ object.sichtungsvermerk }}</div>
+            {% else %}
+            <button type="submit" class="button">Sichtung vermerken</button>
+            {% endif %}
+          </div>
+        </form>
+      </div>
+      <div class="column">
+        <div class="field">
+          <label class="label">Verteiler</label>
+          {% for funktion in verteiler %}
+          <div>{{ funktion }}</div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="column">
+        <div class="field">
+          <label class="label">Verteilungsvermerke</label>
+          {% for verteilungsvermerk in object.verteilungsvermerke.all %}
+          <div>{{ verteilungsvermerk }}</div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="column">
+        <form action="{% url 'verteilungsvermerk' pk=object.id %}" method="post">{% csrf_token %}
+          <div class="field">
+            {{ verteilungsvermerk | bulma }}
+            <button type="submit" class="button">Verteilung vermerken</button>
+          </div>
+        </form>
+      </div>
     </div>
-    <button type="submit" name="sichtungsvermerk" class="button">abzeichnen</button>
   </div>
-  <div class="field">
-
-  </div>
-</form>
+</div>
 
 {% endblock content %}
