@@ -33,16 +33,16 @@ def nachricht_send_sichtung_webhooks(sender, instance, created, update_fields, *
         for webhook in models.MicrosoftTeamsWebhook.objects.filter(funktion__isnull=True):
             call_webhook(message_card,webhook.webhook_url)
 
-# @receiver(m2m_changed, sender=models.Nachricht.verteiler.through, dispatch_uid="nachricht_send_verteiler_webhooks")
-# def nachricht_send_verteiler_webhooks(sender, instance, action, pk_set, **kwargs):
-#
-#
-#     nachricht = instance
-#     message_card = nachricht.message_card()
-#
-#     if action == 'post_add':
-#         for pk in pk_set:
-#             funktion = models.Funktion.objects.get(pk=pk)
-#
-#             for webhook in models.MicrosoftTeamsWebhook.objects.filter(funktion=funktion):
-#                 call_webhook(message_card,webhook.webhook_url)
+@receiver(m2m_changed, sender=models.Verteilungsvermerk.verteiler.through, dispatch_uid="verteilungsvermerk_send_verteiler_webhooks")
+def verteilungsvermerk_send_verteiler_webhooks(sender, instance, action, pk_set, **kwargs):
+
+
+    nachricht = instance.nachricht
+    message_card = nachricht.message_card()
+
+    if action == 'post_add':
+        for pk in pk_set:
+            funktion = models.Funktion.objects.get(pk=pk)
+
+            for webhook in models.MicrosoftTeamsWebhook.objects.filter(funktion=funktion):
+                call_webhook(message_card,webhook.webhook_url)
