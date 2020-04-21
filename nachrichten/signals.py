@@ -7,11 +7,6 @@ from . import models
 import requests
 
 from django_mailbox.signals import message_received
-from django.dispatch import receiver
-
-@receiver(message_received)
-def dance_jig(sender, message, **args):
-    print( "I just recieved a message titled %s from a mailbox named %s" % (message.subject, message.mailbox.name))
 
 def call_webhook(message_card,webhook_url):
     requests.post(
@@ -46,3 +41,14 @@ def verteilungsvermerk_send_verteiler_webhooks(sender, instance, action, pk_set,
 
             for webhook in models.MicrosoftTeamsWebhook.objects.filter(funktion=funktion):
                 call_webhook(message_card,webhook.webhook_url)
+
+@receiver(message_received)
+def dance_jig(sender, message, **args):
+    print( "recieved a message titled %s from a mailbox named %s" % (message.subject, message.mailbox.name))
+    models.Nachricht.objects.create(
+        mail = message,
+        betreff = message.subject,
+        inhalt = message.text,
+        richtung = 'E',
+        absender = message.from_header
+    )

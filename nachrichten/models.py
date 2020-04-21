@@ -10,6 +10,8 @@ from django_actionable_messages.message_card.inputs import TextInput
 from django_actionable_messages.message_card.sections import Section
 from django_actionable_messages.message_card.utils import OSType
 
+from django_mailbox.models import Message
+
 class Funktion(models.Model):
 
     name = models.CharField(max_length=200)
@@ -26,9 +28,12 @@ class Nachricht(models.Model):
 
     absender = models.CharField(max_length=200)
     anschrift = models.CharField(max_length=200)
+    betreff = models.CharField(max_length=255,null=True,blank=True)
     inhalt = models.TextField()
 
     vorrangstufe = models.IntegerField(default=0, choices=config.VORRANGSTUFEN)
+
+    mail = models.OneToOneField(Message,on_delete=models.CASCADE,null=True,blank=True)
 
     def __str__(self):
         title = self.get_richtung_display()
