@@ -43,7 +43,7 @@ def verteilungsvermerk_send_verteiler_webhooks(sender, instance, action, pk_set,
                 call_webhook(message_card,webhook.webhook_url)
 
 @receiver(message_received)
-def dance_jig(sender, message, **args):
+def mail_in(sender, message, **args):
     print( "recieved a message titled %s from a mailbox named %s" % (message.subject, message.mailbox.name))
     models.Nachricht.objects.create(
         mail = message,
