@@ -148,7 +148,7 @@
         {% endfor %}
       </div>
       <form action="{% url 'verteilungsvermerk' pk=object.id %}" method="post">{% csrf_token %}
-        <div class="field">{{object.verteilungsvermerke.count}}
+        <div class="field">
           {{ verteilungsvermerk | bulma }}
           <button type="submit" class="button">Verteilung vermerken</button>
         </div>
