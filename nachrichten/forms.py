@@ -5,7 +5,7 @@ class NeueEingehendeNachricht(forms.ModelForm):
 
     title = "Neue eingehende Nachricht"
 
-    vorrangstufe = forms.ChoiceField(choices=config.VORRANGSTUFEN, widget=forms.RadioSelect())
+    vorrangstufe = forms.ChoiceField(choices=config.VORRANGSTUFEN, widget=forms.RadioSelect(), initial='0')
     aufnahmeweg = forms.ChoiceField(choices=config.MELDEWEGE, widget=forms.RadioSelect())
 
     class Meta():
@@ -16,7 +16,7 @@ class NeueAusgehendeNachricht(forms.ModelForm):
 
     title = "Neue ausgehende Nachricht"
 
-    vorrangstufe = forms.ChoiceField(choices=config.VORRANGSTUFEN, widget=forms.RadioSelect())
+    vorrangstufe = forms.ChoiceField(choices=config.VORRANGSTUFEN, widget=forms.RadioSelect(), initial='0')
 
     class Meta():
         model = models.Nachricht
