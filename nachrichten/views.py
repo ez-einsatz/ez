@@ -16,11 +16,14 @@ class NeueEingehendeNachricht(PermissionRequiredMixin, generic.CreateView):
     permission_required = 'nachrichten.add_nachricht'
 
     def form_valid(self, form):
-        #vermerk = models.Signatur(benutzer=self.request.user)
-        #vermerk.save()
-        #form.instance.aufnahmevermerk = vermerk
         form.instance.richtung = 'E'
-        return super().form_valid(form)
+        form.instance.save()
+        vermerk = models.Aufnahmevermerk.objects.create(
+            benutzer=self.request.user,
+            nachricht=form.instance,
+            weg=form.cleaned_data['aufnahmeweg'],
+        )
+        return HttpResponseRedirect(form.instance.get_absolute_url())
 
 class NeueAusgehendeNachricht(PermissionRequiredMixin, generic.CreateView):
     model = models.Nachricht
@@ -92,7 +95,7 @@ class Befoerderungsvermerk(PermissionRequiredMixin, generic.CreateView):
         models.Befoerderungsvermerk.objects.get_or_create(
             nachricht=nachricht,
             benutzer=self.request.user,
-            weg=form.cleaned_data['weg']
+            weg=form.cleaned_data['weg'],
         )
         return HttpResponseRedirect(nachricht.get_absolute_url())
 
