@@ -50,5 +50,6 @@ def dance_jig(sender, message, **args):
         betreff = message.subject,
         inhalt = message.text,
         richtung = 'E',
-        absender = message.from_header
+        absender = message.from_header,
+        anschrift = message.to_header,
     )
