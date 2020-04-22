@@ -16,7 +16,7 @@
           <th>Vorrangstufe</th>
           <th>Absender</th>
           <th>Anschrift</th>
-          <th>Inhalt</th>
+          <th>Betreff</th>
           <th>Verteiler</th>
         </tr>
       </thead>
@@ -26,10 +26,10 @@
             <td><a href="{{ nachricht.get_absolute_url }}">{{ nachricht.id }}</a></td>
             <td>{{ nachricht.get_richtung_display }}</td>
             <td>{{ nachricht.get_vorrangstufe_display }}</td>
-            <td>{{ nachricht.absender }}</td>
-            <td>{{ nachricht.anschrift }}</td>
-            <td>{{ nachricht.inhalt }}</td>
-            <td>{% for funktion in nachricht.verteiler.all %}{{ funktion }}<br/>{% endfor %}</td>
+            <td>{{ nachricht.absender | escape }}</td>
+            <td>{{ nachricht.anschrift | escape }}</td>
+            <td>{{ nachricht.betreff | escape }}</td>
+            <td>{% for funktion in nachricht.verteiler.all %}{{ funktion | escape }}<br/>{% endfor %}</td>
           </tr>
       {% endfor %}
     </tbody>

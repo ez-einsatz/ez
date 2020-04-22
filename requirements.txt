@@ -7,3 +7,4 @@ Pillow
 PyYAML
 django-extensions
 pygraphviz
+django-bleach

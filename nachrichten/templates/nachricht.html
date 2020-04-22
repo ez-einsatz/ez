@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
 {% load bulma_tags %}
+{% load bleach_tags %}
+
+{% block extra_css %}
+<style>
+  .content pre {
+    padding: 0 0 0 0;
+    background-color: unset;
+  }
+</style>
+{% endblock extra_css %}
 
 {% block content %}
 
@@ -8,15 +18,9 @@
   <h1  class="title">{{ form.title }}</h1>
 
   <div class="box">
-    <!--<h2 class="subtitle">Nachrichtenkopf</h2>-->
+    <h2 class="subtitle">Nachweisung</h2>
 
     <div class="columns">
-      <div class="column">
-        <div class="field">
-          <label class="label">Richtung</label>
-          <div>{{ object.get_richtung_display }}</div>
-        </div>
-      </div>
       {% if object.richtung == 'E' or object.richtung == 'R' %}
       <div class="column">
         <div class="field">
@@ -26,7 +30,7 @@
       </div>
       {% endif %}
       {% if object.richtung == 'A' or object.richtung == 'R' %}
-      <div class="column">
+      <div class="column is-narrow">
         <form action="{% url 'annahmevermerk' pk=object.id %}" method="post">{% csrf_token %}
           <div class="field">
             <label class="label">Annahmevermerk</label>
@@ -54,82 +58,103 @@
         </form>
       </div>
       {% endif %}
-      <div class="column">
+      <div class="column is-narrow">
         <div class="field">
-          <label class="label">Nachweisung</label>
+          <label class="label">Lfd. Nr.</label>
+          <div>{{object.id}}</div>
+        </div>
+      </div>
+      <div class="column is-narrow">
+        <div class="field">
+          <label class="label">Richtung</label>
+          <div>{{ object.get_richtung_display }}</div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="columns">
-      <div class="column">
+  <div class="columns">
+
+    <div class="column"><div class="box">
+      <h2 class="subtitle">Nachricht</h2>
+      <div class="is-pulled-right has-text-right">
         <div class="field">
           <label class="label">Vorrangstufe</label>
           <div>{{ object.get_vorrangstufe_display }}</div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="box">
-    <!--<h2 class="subtitle"></h2>-->
+      <div class="field">
+        <label class="label">Absender</label>
+        <div>{{ object.absender | escape }}</div>
+      </div>
+      <div class="field">
+        <label class="label">Anschrift</label>
+        <div>{{ object.anschrift | escape }}</div>
+      </div>
+      {% if object.mail %}
+      <div class="field">
+        <label class="label">Betreff</label>
+        <div>{{ object.mail.subject | escape }}</div>
+      </div>
+      <div class="field">
+        <div class="is-pulled-right"><a href="{{ object.mail.eml.url }}">E-Mail Original</a></div>
+        <label class="label">Inhalt</label>
+        {% if object.mail.html %}
+        <div class="content box">{{ object.mail.html | bleach }}</div>
+        {% else %}
+        <div>{{ object.mail.text | escape | linebreaks }}</div>
+        {% endif %}
+      </div>
+      <div class="field">
+        <label class="label">Anhänge</label>
+        {% for attachment in object.mail.attachments.all %}
+        <div><a href="{{ attachment.document.url }}">{{ attachment.get_filename }}</a> <a href="{{ attachment.document.url }}" download="{{ attachment.get_filename }}">(download)</a></div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="field">
+        <label class="label">Betreff / Spruchkopf</label>
+        <div>{{ object.betreff | escape }}</div>
+      </div>
+      <div class="field">
+        <label class="label">Inhalt</label>
+        <div>{{ object.inhalt | escape | linebreaks }}</div>
+      </div>
+      {% endif %}
+    </div></div>
 
-    <div class="field">
-      <label class="label">Absender</label>
-      <div>{{ object.absender | escape }}</div>
-    </div>
-    <div class="field">
-      <label class="label">Anschrift</label>
-      <div>{{ object.anschrift | escape }}</div>
-    </div>
-    <div class="field">
-      <label class="label">Betreff / Spruchkopf</label>
-      <div>{{ object.betreff | escape }}</div>
-    </div>
-    <div class="field">
-      <label class="label">Inhalt</label>
-      <div>{{ object.inhalt | escape }}</div>
-    </div>
-  </div>
-  <div class="box">
-    <h2 class="subtitle">Sichter</h2>
-    <div class="columns">
-      <div class="column">
-        <form action="{% url 'sichtungsvermerk' pk=object.id %}" method="post">{% csrf_token %}
-          <div class="field">
-            <label class="label">Sichtungsvermerk</label>
-            {% if object.sichtungsvermerk %}
-            <div>{{ object.sichtungsvermerk }}</div>
-            {% else %}
-            <button type="submit" class="button">Sichtung vermerken</button>
-            {% endif %}
-          </div>
-        </form>
-      </div>
-      <div class="column">
+    <div class="column is-narrow"><div class="box">
+      <h2 class="subtitle">Sichtung</h2>
+      <form action="{% url 'sichtungsvermerk' pk=object.id %}" method="post">{% csrf_token %}
         <div class="field">
-          <label class="label">Verteiler</label>
-          {% for funktion in verteiler %}
-          <div>{{ funktion }}</div>
-          {% endfor %}
+          <label class="label">Sichtungsvermerk</label>
+          {% if object.sichtungsvermerk %}
+          <div>{{ object.sichtungsvermerk }}</div>
+          {% else %}
+          <button type="submit" class="button">Sichtung vermerken</button>
+          {% endif %}
         </div>
+      </form>
+      <div class="field">
+        <label class="label">Verteiler</label>
+        {% for funktion in verteiler %}
+        <div>{{ funktion }}</div>
+        {% endfor %}
       </div>
-      <div class="column">
-        <div class="field">
-          <label class="label">Verteilungsvermerke</label>
-          {% for verteilungsvermerk in object.verteilungsvermerke.all %}
-          <div>{{ verteilungsvermerk }}</div>
-          {% endfor %}
+      <div class="field">
+        <label class="label">Verteilungsvermerke</label>
+        {% for verteilungsvermerk in object.verteilungsvermerke.all %}
+        <div>{{ verteilungsvermerk }}</div>
+        {% endfor %}
+      </div>
+      <form action="{% url 'verteilungsvermerk' pk=object.id %}" method="post">{% csrf_token %}
+        <div class="field">{{object.verteilungsvermerke.count}}
+          {{ verteilungsvermerk | bulma }}
+          <button type="submit" class="button">Verteilung vermerken</button>
         </div>
-      </div>
-      <div class="column">
-        <form action="{% url 'verteilungsvermerk' pk=object.id %}" method="post">{% csrf_token %}
-          <div class="field">
-            {{ verteilungsvermerk | bulma }}
-            <button type="submit" class="button">Verteilung vermerken</button>
-          </div>
-        </form>
-      </div>
-    </div>
+      </form>
+    </div></div>
+
   </div>
 </div>
 
