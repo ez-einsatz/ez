@@ -2,7 +2,7 @@ from django.db.models.signals import post_save, m2m_changed
 from django.dispatch import receiver
 from django.db import transaction
 
-from . import models
+from . import models, config
 
 import requests
 
@@ -45,11 +45,15 @@ def verteilungsvermerk_send_verteiler_webhooks(sender, instance, action, pk_set,
 @receiver(message_received)
 def mail_in(sender, message, **args):
     print( "recieved a message titled %s from a mailbox named %s" % (message.subject, message.mailbox.name))
-    models.Nachricht.objects.create(
+    nachricht = models.Nachricht.objects.create(
         mail = message,
         betreff = message.subject,
         inhalt = message.text,
         richtung = 'E',
         absender = message.from_header,
         anschrift = message.to_header,
+    )
+    vermerk = models.Aufnahmevermerk.objects.create(
+        nachricht=nachricht,
+        weg={y: x for x, y in config.MELDEWEGE}['Mail'],
     )
