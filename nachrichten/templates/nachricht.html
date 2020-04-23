@@ -105,12 +105,14 @@
         <div>{{ object.mail.text | escape | linebreaks }}</div>
         {% endif %}
       </div>
+      {% if object.mail.attachments.count > 0 %}
       <div class="field">
         <label class="label">Anhänge</label>
         {% for attachment in object.mail.attachments.all %}
         <div><a href="{{ attachment.document.url }}">{{ attachment.get_filename }}</a> <a href="{{ attachment.document.url }}" download="{{ attachment.get_filename }}">(download)</a></div>
         {% endfor %}
       </div>
+      {% endif %}
       {% else %}
       <div class="field">
         <label class="label">Betreff / Spruchkopf</label>
