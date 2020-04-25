@@ -77,9 +77,12 @@ class Aufnahmevermerk(models.Model):
     benutzer = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     nachricht = models.OneToOneField(Nachricht,on_delete=models.CASCADE,primary_key=True)
     weg = models.IntegerField(null=True, choices=config.MELDEWEGE)
+    kanal = models.CharField(max_length=200,null=True,blank=True)
 
     def __str__(self):
         r = str(self.get_weg_display()) + ' '
+        if self.kanal:
+            r += str(self.kanal)+' '
         r += self.zeit.strftime("%d%H%M%b%-y").lower()
         if self.benutzer:
             r += ' '+str(self.benutzer)
@@ -111,9 +114,12 @@ class Befoerderungsvermerk(models.Model):
     benutzer = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     nachricht = models.OneToOneField(Nachricht,on_delete=models.CASCADE,primary_key=True)
     weg = models.IntegerField(null=True, choices=config.MELDEWEGE)
+    kanal = models.CharField(max_length=200,null=True,blank=True)
 
     def __str__(self):
         r = str(self.get_weg_display()) + ' '
+        if self.kanal:
+            r += str(self.kanal)+' '
         r += self.zeit.strftime("%d%H%M%b%-y").lower()
         if self.benutzer:
             r += ' '+str(self.benutzer)

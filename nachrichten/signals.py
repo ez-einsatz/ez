@@ -56,4 +56,5 @@ def mail_in(sender, message, **args):
     vermerk = models.Aufnahmevermerk.objects.create(
         nachricht=nachricht,
         weg={y: x for x, y in config.MELDEWEGE}['Mail'],
+        kanal=message.mailbox,
     )
