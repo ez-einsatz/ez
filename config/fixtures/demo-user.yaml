@@ -1,8 +1,8 @@
 - model: auth.user
   pk: 2
   fields:
-    password: pbkdf2_sha256$180000$oXZDFvzTra8S$Nx75z8dThF4KWSYyMST0c2Ew8RWGpZOeAGT4kUshNGM=
-    last_login: null
+    password: pbkdf2_sha256$180000$2uHmw60qqR1J$aM/REj3ipmBAK/ej1HA76liOxTowPXurmVQeZxdtR2A=
+    last_login: 2020-04-25 21:23:25.696042+00:00
     is_superuser: false
     username: demo
     first_name: ''
