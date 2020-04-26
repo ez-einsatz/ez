@@ -20,11 +20,13 @@ class NeueEingehendeNachricht(PermissionRequiredMixin, generic.CreateView):
     @transaction.atomic
     def form_valid(self, form):
         form.instance.richtung = 'E'
-        form.instance.aufnahmevermerk = models.Aufnahmevermerk.objects.create(
+        form.instance.aufnahmevermerk = models.Aufnahmevermerk(
             benutzer=self.request.user,
             weg=form.cleaned_data['aufnahmeweg'],
         )
         form.instance.save()
+        form.instance.aufnahmevermerk.nachricht=form.instance
+        form.instance.aufnahmevermerk.save()
         return HttpResponseRedirect(form.instance.get_absolute_url())
 
 class NeueAusgehendeNachricht(PermissionRequiredMixin, generic.CreateView):
