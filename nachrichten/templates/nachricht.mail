@@ -13,7 +13,6 @@ Nachricht:
 {% endif %}{% if object.betreff %}  Betreff / Spruchkopf: {{ object.betreff }}
 {% endif %}
 Inhalt:
-
 > {{ inhalt | safe }}
 
 Sichtung:
