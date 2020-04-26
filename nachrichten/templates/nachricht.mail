@@ -13,7 +13,7 @@ Nachricht:
 {% endif %}
 Inhalt:
 
-{{ object.inhalt }}
+> {{ inhalt | safe }}
 
 Sichtung:
 {% if object.sichtungsvermerk %}  Sichtungsvermerk: {{ object.sichtungsvermerk }}

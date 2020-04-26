@@ -21,7 +21,9 @@ def send_mail(nachricht_pk,mail_addresses):
         subject,
         render_to_string('nachricht.mail', {
             'object': nachricht,
-            'verteiler': models.Funktion.objects.filter(pk__in=nachricht.verteilungsvermerke.all().values_list('verteiler', flat=True).distinct())
+            'verteiler': models.Funktion.objects.filter(pk__in=nachricht.verteilungsvermerke.all().values_list('verteiler', flat=True).distinct()),
+            'inhalt': nachricht.inhalt.replace("\n", "\n> ")
+
         }),
         settings.EMAIL_FROM,
         mail_addresses,
