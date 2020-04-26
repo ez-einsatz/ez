@@ -97,7 +97,7 @@ class Aufnahmevermerk(models.Model):
 
     zeit = models.DateTimeField(auto_now_add=True)
     benutzer = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
-    nachricht = models.OneToOneField(Nachricht,on_delete=models.CASCADE,primary_key=True)
+    nachricht = models.OneToOneField(Nachricht,on_delete=models.CASCADE,primary_key=True,db_constraint=False)
     weg = models.IntegerField(null=True, choices=config.MELDEWEGE)
     kanal = models.CharField(max_length=200,null=True,blank=True)
 
