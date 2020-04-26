@@ -155,3 +155,5 @@ BLEACH_STRIP_TAGS = True
 
 # Strip comments, or leave them in.
 BLEACH_STRIP_COMMENTS = False
+
+CELERY_BROKER_URL = 'amqp://localhost'

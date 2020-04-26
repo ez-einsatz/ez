@@ -8,3 +8,4 @@ PyYAML
 django-extensions
 pygraphviz
 django-bleach
+celery
