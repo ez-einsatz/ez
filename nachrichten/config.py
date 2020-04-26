@@ -21,6 +21,6 @@ MELDEWEGE = (
         (3, 'Mail'),
         (4, 'SMS'),
         (5, 'Fax'),
-        (6, 'MIS'),
+        (6, 'Teams'),
         (7, 'drkserver'),
     )
