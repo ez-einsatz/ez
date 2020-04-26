@@ -158,5 +158,6 @@ BLEACH_STRIP_COMMENTS = False
 
 CELERY_TASK_ALWAYS_EAGER = True
 
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = 'debug-mails'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_FROM = 'Teststab <teststab@example.net>'

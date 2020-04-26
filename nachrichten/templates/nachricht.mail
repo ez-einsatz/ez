@@ -1,0 +1,24 @@
+Nachweisung:
+{% if object.richtung == 'E' or object.richtung == 'R' %}  Aufnahmevermerk: {{ object.aufnahmevermerk }}
+{% endif %}{% if object.richtung == 'A' or object.richtung == 'R' %}  Annahmevermerk: {{ object.annahmevermerk }}
+{% endif %}{% if object.befoerderungsvermerk %}  Beförderungsvermerk: {{ object.befoerderungsvermerk }}
+{% endif %}  Lfd. Nr.: {{object.id}}
+  Richtung: {{ object.get_richtung_display }}
+
+Nachricht:
+  Vorrangstufe: {{ object.get_vorrangstufe_display }}
+{% if object.absender %}  Absender: {{ object.absender }}
+{% endif %}{% if object.anschrift %}  Anschrift: {{ object.anschrift }}
+{% endif %}{% if object.betreff %}  Betreff / Spruchkopf: {{ object.betreff }}
+{% endif %}
+Inhalt:
+
+{{ object.inhalt }}
+
+Sichtung:
+{% if object.sichtungsvermerk %}  Sichtungsvermerk: {{ object.sichtungsvermerk }}
+{% endif %}  Verteiler:
+{% for funktion in verteiler %}    {{ funktion }}
+{% endfor %}  Verteilungsvermerke:
+{% for verteilungsvermerk in object.verteilungsvermerke.all %}    {{ verteilungsvermerk }}
+{% endfor %}

@@ -6,18 +6,25 @@ import requests
 from django.core.mail import EmailMessage
 
 from . import models, config, tasks
+from django.conf import settings
+
+from django.template.loader import render_to_string
 
 @shared_task
-def send_mail(nachricht_pk,mail_address):
+def send_mail(nachricht_pk,mail_addresses):
 
     nachricht = models.Nachricht.objects.get(id=nachricht_pk)
-    print(nachricht,mail_address)
+
+    subject = str(nachricht)
 
     email = EmailMessage(
-        nachricht,
-        nachricht.inhalt,
-        mail_address,
-        ['einsatzstab-test@drkdieburg.de'],
+        subject,
+        render_to_string('nachricht.mail', {
+            'object': nachricht,
+            'verteiler': models.Funktion.objects.filter(pk__in=nachricht.verteilungsvermerke.all().values_list('verteiler', flat=True).distinct())
+        }),
+        settings.EMAIL_FROM,
+        mail_addresses,
     )
     email.send()
 
@@ -40,7 +47,7 @@ def call_microsoft_teams_webhook(nachricht_pk,webhook_url):
 def nachricht_send_sichtung_hooks(nachricht_pk):
 
     for vmail in models.VerteilerMail.objects.filter(funktion__isnull=True):
-        tasks.send_mail.delay(nachricht_pk,vmail.mail_address)
+        tasks.send_mail.delay(nachricht_pk,[vmail.mail_address])
 
     for webhook in models.MicrosoftTeamsWebhook.objects.filter(funktion__isnull=True):
         call_microsoft_teams_webhook.delay(nachricht_pk,webhook.webhook_url)
@@ -48,8 +55,11 @@ def nachricht_send_sichtung_hooks(nachricht_pk):
 @shared_task
 def verteilungsvermerk_send_verteiler_hooks(nachricht_pk,funktion_pk):
 
+    mail_addresses = []
     for vmail in models.VerteilerMail.objects.filter(funktion_id=funktion_pk):
-        tasks.send_mail.delay(nachricht_pk,vmail.mail_address)
+        mail_addresses.append(vmail.mail_address)
+    if len(mail_addresses) > 0:
+        tasks.send_mail.delay(nachricht_pk,mail_addresses)
 
     for webhook in models.MicrosoftTeamsWebhook.objects.filter(funktion_id=funktion_pk):
         tasks.call_microsoft_teams_webhook.delay(nachricht_pk,webhook.webhook_url)

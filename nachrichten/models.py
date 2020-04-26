@@ -25,6 +25,7 @@ class Funktion(models.Model):
 
 class Nachricht(models.Model):
     richtung = models.CharField(max_length=1, choices=config.MELDERICHTUNG)
+    zeit = models.DateTimeField(auto_now_add=True,null=True)
 
     absender = models.CharField(max_length=200)
     anschrift = models.CharField(max_length=200)
@@ -35,9 +36,30 @@ class Nachricht(models.Model):
 
     mail = models.OneToOneField(Message,on_delete=models.CASCADE,null=True,blank=True)
 
+    def get_transport_zeit(self):
+        if hasattr(self,'aufnahmevermerk') and not self.richtung == 'R':
+            return self.aufnahmevermerk.zeit
+        if hasattr(self,'befoerderungsvermerk'):
+            return self.befoerderungsvermerk.zeit
+        return None
+
+    def get_transport_zeit_display(self):
+        zeit = self.get_transport_zeit()
+        if zeit:
+            return self.get_transport_zeit().strftime("%d%H%M%b%-y").lower()
+        else:
+            return '-'
+
+    def get_zeit_display(self):
+        return self.zeit.strftime("%d%H%M%b%-y").lower()
+
     def __str__(self):
-        title = self.get_richtung_display()
-        title += " #"+str(self.id)
+        title = self.get_zeit_display()
+        if self.betreff:
+            title += ' '+betreff
+        else:
+            title += ' Nachricht'
+        title += " "+self.richtung+"#"+str(self.id)
 
         return title
 

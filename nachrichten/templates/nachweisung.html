@@ -12,6 +12,8 @@
     <thead>
         <tr>
           <th>#</th>
+          <th>Erstellungszeit</th>
+          <th>Transportzeit</th>
           <th>Richtung</th>
           <th>Vorrangstufe</th>
           <th>Absender</th>
@@ -24,6 +26,8 @@
       {% for nachricht in object_list %}
           <tr>
             <td><a href="{{ nachricht.get_absolute_url }}">{{ nachricht.id }}</a></td>
+            <td>{{ nachricht.get_zeit_display }}</td>
+            <td>{{ nachricht.get_transport_zeit_display }}</td>
             <td>{{ nachricht.get_richtung_display }}</td>
             <td>{{ nachricht.get_vorrangstufe_display }}</td>
             <td>{{ nachricht.absender | escape }}</td>

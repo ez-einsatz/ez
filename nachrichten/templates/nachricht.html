@@ -25,7 +25,7 @@
       <div class="column">
         <div class="field">
           <label class="label">Aufnahmevermerk</label>
-          <div>{{ object.get_aufnahmeweg_display }} {{ object.aufnahmevermerk }}</div>
+          <div>{{ object.aufnahmevermerk }}</div>
         </div>
       </div>
       {% endif %}
@@ -49,7 +49,7 @@
           <div class="field">
             {% if object.befoerderungsvermerk %}
             <label class="label">Beförderungsvermerk</label>
-            <div>{{ object.get_befoerderungsweg_display }} {{ object.befoerderungsvermerk }}</div>
+            <div>{{ object.befoerderungsvermerk }}</div>
             {% else %}
             {{ befoerderungsvermerk.weg | bulma }}
             <button type="submit" class="button">Beförderung vermerken</button>
@@ -78,6 +78,10 @@
     <div class="column"><div class="box">
       <h2 class="subtitle">Nachricht</h2>
       <div class="is-pulled-right has-text-right">
+        <div class="field">
+          <label class="label">Erstellungszeit</label>
+          <div>{{ object.get_zeit_display }}</div>
+        </div>
         <div class="field">
           <label class="label">Vorrangstufe</label>
           <div>{{ object.get_vorrangstufe_display }}</div>
@@ -114,10 +118,12 @@
       </div>
       {% endif %}
       {% else %}
+      {% if object.betreff %}
       <div class="field">
         <label class="label">Betreff / Spruchkopf</label>
         <div>{{ object.betreff | escape }}</div>
       </div>
+      {% endif %}
       <div class="field">
         <label class="label">Inhalt</label>
         <div>{{ object.inhalt | escape | linebreaks }}</div>
