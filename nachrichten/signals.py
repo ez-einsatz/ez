@@ -10,12 +10,10 @@ from django_mailbox.signals import message_received
 @receiver(post_save, sender=models.Nachricht, dispatch_uid="nachricht_send_sichtung_hooks")
 def nachricht_send_sichtung_hooks(sender, instance, created, update_fields, **kwargs):
 
-    nachricht = instance
-
     if created:
-        tasks.nachricht_send_sichtung_hooks.delay(nachricht.id)
+        tasks.nachricht_send_sichtung_hooks.delay(instance.id)
 
-@receiver(m2m_changed, sender=models.Verteilungsvermerk.verteiler.through, dispatch_uid="verteilungsvermerk_send_verteiler_webhooks")
+@receiver(m2m_changed, sender=models.Verteilungsvermerk.verteiler.through, dispatch_uid="verteilungsvermerk_send_verteiler_hooks")
 def verteilungsvermerk_send_verteiler_hooks(sender, instance, action, pk_set, **kwargs):
 
     if action == 'post_add':

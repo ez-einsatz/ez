@@ -168,7 +168,7 @@ class Verteilungsvermerk(models.Model):
 
 class MicrosoftTeamsWebhook(models.Model):
 
-    funktion = models.ForeignKey(Funktion, verbose_name="Funktion", blank=True, null=True, on_delete=models.CASCADE,related_name="funktionen",related_query_name="funktion")
+    funktion = models.ForeignKey(Funktion, verbose_name="Funktion", blank=True, null=True, on_delete=models.CASCADE,related_name="microsoft_teams_webhooks",related_query_name="microsoft_teams_webhook")
     webhook_url = models.CharField(max_length=200, verbose_name="Microsoft Teams Webhook URL")
 
     def __str__(self):
@@ -181,3 +181,20 @@ class MicrosoftTeamsWebhook(models.Model):
     class Meta:
         verbose_name = "Microsoft Teams Webhook"
         verbose_name_plural = "Microsoft Teams Webhooks"
+
+class VerteilerMail(models.Model):
+
+    funktion = models.ForeignKey(Funktion, verbose_name="Funktion", blank=True, null=True, on_delete=models.CASCADE,related_name="verteiler_mails",related_query_name="verteiler_mail")
+    mail_address = models.EmailField()
+
+    def __str__(self):
+        r = self.mail_address
+        if not self.funktion == None:
+            return str(self.funktion) + ' ' + self.mail_address
+        else:
+            return "Sichtung" + ' ' + self.mail_address
+
+
+    class Meta:
+        verbose_name = "Verteiler Mailadresse"
+        verbose_name_plural = "Verteiler Mailadressen"

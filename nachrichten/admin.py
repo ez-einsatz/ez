@@ -12,6 +12,7 @@ class VerteilungsvermerkAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Funktion)
 admin.site.register(models.MicrosoftTeamsWebhook)
+admin.site.register(models.VerteilerMail)
 admin.site.register(models.Nachricht)
 admin.site.register(models.Annahmevermerk)
 admin.site.register(models.Befoerderungsvermerk)
