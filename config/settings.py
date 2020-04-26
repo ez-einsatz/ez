@@ -156,4 +156,7 @@ BLEACH_STRIP_TAGS = True
 # Strip comments, or leave them in.
 BLEACH_STRIP_COMMENTS = False
 
-CELERY_BROKER_URL = 'amqp://localhost'
+CELERY_TASK_ALWAYS_EAGER = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = 'debug-mails'
