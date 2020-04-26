@@ -8,6 +8,8 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from . import models, forms
 
+from django.db import transaction
+
 class NeueEingehendeNachricht(PermissionRequiredMixin, generic.CreateView):
     model = models.Nachricht
     form_class = forms.NeueEingehendeNachricht
@@ -15,14 +17,14 @@ class NeueEingehendeNachricht(PermissionRequiredMixin, generic.CreateView):
 
     permission_required = 'nachrichten.add_nachricht'
 
+    @transaction.atomic
     def form_valid(self, form):
         form.instance.richtung = 'E'
-        form.instance.save()
-        vermerk = models.Aufnahmevermerk.objects.create(
+        form.instance.aufnahmevermerk = models.Aufnahmevermerk.objects.create(
             benutzer=self.request.user,
-            nachricht=form.instance,
             weg=form.cleaned_data['aufnahmeweg'],
         )
+        form.instance.save()
         return HttpResponseRedirect(form.instance.get_absolute_url())
 
 class NeueAusgehendeNachricht(PermissionRequiredMixin, generic.CreateView):
