@@ -30,7 +30,5 @@ def nachricht_send_sichtung_hooks(nachricht_pk):
 @shared_task
 def verteilungsvermerk_send_verteiler_hooks(nachricht_pk,funktion_pk):
 
-    funktion = models.Funktion.objects.get(pk=funktion_pk)
-
-    for webhook in models.MicrosoftTeamsWebhook.objects.filter(funktion=funktion):
+    for webhook in models.MicrosoftTeamsWebhook.objects.filter(funktion_id=funktion_pk):
         tasks.call_microsoft_teams_webhook.delay(nachricht_pk,webhook.webhook_url)
