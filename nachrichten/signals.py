@@ -7,11 +7,14 @@ from . import models, config, tasks
 from django_mailbox.signals import message_received
 
 
+def nachricht_send_sichtung_hooks_post_commit(instance):
+    tasks.nachricht_send_sichtung_hooks.delay(instance.id)
+
+
 @receiver(post_save, sender=models.Nachricht, dispatch_uid="nachricht_send_sichtung_hooks")
 def nachricht_send_sichtung_hooks(sender, instance, created, update_fields, **kwargs):
-
     if created:
-        tasks.nachricht_send_sichtung_hooks.delay(instance.id)
+        transaction.on_commit(lambda: nachricht_send_sichtung_hooks_post_commit(instance))
 
 @receiver(m2m_changed, sender=models.Verteilungsvermerk.verteiler.through, dispatch_uid="verteilungsvermerk_send_verteiler_hooks")
 def verteilungsvermerk_send_verteiler_hooks(sender, instance, action, pk_set, **kwargs):
