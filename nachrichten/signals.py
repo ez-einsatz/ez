@@ -2,45 +2,25 @@ from django.db.models.signals import post_save, m2m_changed
 from django.dispatch import receiver
 from django.db import transaction
 
-from . import models, config
-
-import requests
+from . import models, config, tasks
 
 from django_mailbox.signals import message_received
 
-def call_webhook(message_card,webhook_url):
-    requests.post(
-        webhook_url,
-        data=message_card.json_payload,
-        headers={
-            "Content-Type": "application/json; charset=utf-8"
-        },
-        timeout=2.50
-    )
 
-@receiver(post_save, sender=models.Nachricht, dispatch_uid="nachricht_send_sichtung_webhooks")
-def nachricht_send_sichtung_webhooks(sender, instance, created, update_fields, **kwargs):
+@receiver(post_save, sender=models.Nachricht, dispatch_uid="nachricht_send_sichtung_hooks")
+def nachricht_send_sichtung_hooks(sender, instance, created, update_fields, **kwargs):
 
     nachricht = instance
-    message_card = nachricht.message_card()
 
     if created:
-        for webhook in models.MicrosoftTeamsWebhook.objects.filter(funktion__isnull=True):
-            call_webhook(message_card,webhook.webhook_url)
+        tasks.nachricht_send_sichtung_hooks.delay(nachricht.id)
 
 @receiver(m2m_changed, sender=models.Verteilungsvermerk.verteiler.through, dispatch_uid="verteilungsvermerk_send_verteiler_webhooks")
-def verteilungsvermerk_send_verteiler_webhooks(sender, instance, action, pk_set, **kwargs):
-
-
-    nachricht = instance.nachricht
-    message_card = nachricht.message_card()
+def verteilungsvermerk_send_verteiler_hooks(sender, instance, action, pk_set, **kwargs):
 
     if action == 'post_add':
-        for pk in pk_set:
-            funktion = models.Funktion.objects.get(pk=pk)
-
-            for webhook in models.MicrosoftTeamsWebhook.objects.filter(funktion=funktion):
-                call_webhook(message_card,webhook.webhook_url)
+        for funktion_pk in pk_set:
+            tasks.verteilungsvermerk_send_verteiler_hooks.delay(instance.nachricht.id,funktion_pk)
 
 @receiver(message_received)
 def mail_in(sender, message, **args):
