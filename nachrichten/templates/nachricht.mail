@@ -1,11 +1,12 @@
 Nachweisung:
-{% if object.richtung == 'E' or object.richtung == 'R' %}  Aufnahmevermerk: {{ object.aufnahmevermerk }}
-{% endif %}{% if object.richtung == 'A' or object.richtung == 'R' %}  Annahmevermerk: {{ object.annahmevermerk }}
+{% if object.aufnahmevermerk %}  Aufnahmevermerk: {{ object.aufnahmevermerk }}
+{% endif %}{% if object.annahmevermerk %}  Annahmevermerk: {{ object.annahmevermerk }}
 {% endif %}{% if object.befoerderungsvermerk %}  Beförderungsvermerk: {{ object.befoerderungsvermerk }}
 {% endif %}  Lfd. Nr.: {{object.id}}
   Richtung: {{ object.get_richtung_display }}
 
 Nachricht:
+  Erstellungszeit: {{ object.get_zeit_display }}
   Vorrangstufe: {{ object.get_vorrangstufe_display }}
 {% if object.absender %}  Absender: {{ object.absender }}
 {% endif %}{% if object.anschrift %}  Anschrift: {{ object.anschrift }}
@@ -17,8 +18,8 @@ Inhalt:
 
 Sichtung:
 {% if object.sichtungsvermerk %}  Sichtungsvermerk: {{ object.sichtungsvermerk }}
-{% endif %}  Verteiler:
+{% endif %}{% if verteiler|length > 0 %}  Verteiler:
 {% for funktion in verteiler %}    {{ funktion }}
-{% endfor %}  Verteilungsvermerke:
+{% endfor %}{% endif %}{% if object.verteilungsvermerke.all|length > 0 %}  Verteilungsvermerke:
 {% for verteilungsvermerk in object.verteilungsvermerke.all %}    {{ verteilungsvermerk }}
-{% endfor %}
+{% endfor %}{% endif %}
