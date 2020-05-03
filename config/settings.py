@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'nachrichten',
     'einsatztagebuch',
     'einheiten',
+    'personal',
+    'fahrzeuge',
     'bulma',
     'django_mailbox',
     "django_actionable_messages",
