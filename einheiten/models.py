@@ -30,8 +30,8 @@ class Position(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = "Einheit"
-        verbose_name_plural = "Einheiten"
+        verbose_name = "Position"
+        verbose_name_plural = "Positionen"
 
 class Besetzung(models.Model):
 
@@ -43,5 +43,5 @@ class Besetzung(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = "Einheit"
-        verbose_name_plural = "Einheiten"
+        verbose_name = "Besetzung"
+        verbose_name_plural = "Besetzungen"
