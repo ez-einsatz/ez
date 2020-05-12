@@ -40,6 +40,17 @@ class NeueAusgehendeNachricht(PermissionRequiredMixin, generic.CreateView):
         form.instance.richtung = 'A'
         return super().form_valid(form)
 
+class NeueMail(PermissionRequiredMixin, generic.CreateView):
+    model = models.Nachricht
+    form_class = forms.NeueMail
+    template_name = 'form.html'
+
+    permission_required = 'nachrichten.add_nachricht'
+
+    def form_valid(self, form):
+        form.instance.notiz = True
+        return super().form_valid(form)
+
 class NeueNotiz(PermissionRequiredMixin, generic.CreateView):
     model = models.Nachricht
     form_class = forms.NeueNotiz

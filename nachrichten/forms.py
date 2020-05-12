@@ -20,7 +20,15 @@ class NeueAusgehendeNachricht(forms.ModelForm):
 
     class Meta():
         model = models.Nachricht
-        fields = ['vorrangstufe','anschrift','inhalt']
+        fields = ['vorrangstufe','anschrift','absender','inhalt']
+
+class NeueMail(forms.ModelForm):
+
+    title = "Neue ausgehende E-Mail"
+
+    class Meta():
+        model = models.Nachricht
+        fields = ['betreff','inhalt']
 
 class NeueNotiz(forms.ModelForm):
 
