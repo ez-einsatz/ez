@@ -148,13 +148,25 @@ class Sichtungsvermerk(PermissionRequiredMixin, generic.CreateView):
 class Nachweisung(PermissionRequiredMixin, generic.ListView):
 
     model = models.Nachricht
-    template_name = 'nachweisung.html'
+    template_name = 'nachrichten.html'
 
     permission_required = 'nachrichten.view_nachricht'
 
-    #paginate_by = 100  # if pagination is desired
+    def get_context_data(self, **kwargs):
+        context = super(Nachweisung, self).get_context_data(**kwargs)
+        context.update({'title':'Nachweisung'})
+        return context
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     #context['now'] = timezone.now()
-    #     return context
+class Ausgang(PermissionRequiredMixin, generic.ListView):
+
+    model = models.Nachricht
+    template_name = 'nachrichten.html'
+
+    queryset = models.Nachricht.objects.filter(befoerderungsvermerk__isnull=True,richtung='A')
+
+    permission_required = 'nachrichten.view_nachricht'
+
+    def get_context_data(self, **kwargs):
+        context = super(Ausgang, self).get_context_data(**kwargs)
+        context.update({'title':'Ausgang'})
+        return context
